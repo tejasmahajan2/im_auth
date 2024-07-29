@@ -4,27 +4,33 @@ import { UserService } from '../user/user.service';
 import { comparePasswords, hashPassword } from 'src/common/utils/bcrypt.util';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
+import { SignUpUserDto } from '../user/dto/sign-up-user.dto';
+import { EmailService } from '../email/email.service';
+import { SignInUserDto } from '../user/dto/sign-in-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private emailService: EmailService,
   ) { }
 
   async signIn(
-    createUserDto: CreateUserDto,
+    signInUserDto: SignInUserDto,
   ): Promise<{ access_token: string }> {
-    const user = await this.userService.findOneByEmail(createUserDto.email);
+    const user = await this.userService.findOneByEmail(signInUserDto.email);
 
     if (!user) {
       throw new NotFoundException();
     }
 
-    if (!await comparePasswords(createUserDto.password, user.password)) {
+    if (!await comparePasswords(signInUserDto.password, user.password)) {
       throw new UnauthorizedException();
     }
 
+    const message = `Verification key has been sent on ${signInUserDto.email}`;
+    
     const { password, ...result } = user;
 
     return {
@@ -32,21 +38,28 @@ export class AuthService {
     };
   }
 
+  // Main Function that handle sign up or registration of user
   async signUp(
-    createUserDto: CreateUserDto,
+    signUpUserDto : SignUpUserDto,
   ) {
-    const username = createUserDto.email;
-    if (await this.userService.isExist(username)) {
+    const email = signUpUserDto.email;
+    
+    if (await this.userService.isExist(email)) {
       throw new BadRequestException('User already exist.');
     };
 
-    createUserDto.password = await hashPassword(createUserDto.password);
-    return await this.userService.create(createUserDto);
+    await this.emailService.sendTestEmail(
+      signUpUserDto.email,
+      `Your one time password for sign in on imentorlly. Password :${signUpUserDto.password}.`
+    );
+    
+    signUpUserDto.password = await hashPassword(signUpUserDto.password);
+    return await this.userService.create(signUpUserDto);
   }
 
-  async updateOne(username: string, updateUserDto: UpdateUserDto,) {
+  async updateOne(email: string, updateUserDto: UpdateUserDto,) {
     updateUserDto.password = await hashPassword(updateUserDto.password);
-    return await this.userService.updateOne(username, updateUserDto);
+    return await this.userService.updateOne(email, updateUserDto);
   }
 
   // Development

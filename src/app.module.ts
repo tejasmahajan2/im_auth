@@ -11,6 +11,7 @@ import { jwtConfig } from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
 import { EmailModule } from './modules/email/email.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { AuthModule } from './modules/auth/auth.module';
     JwtModule.register(jwtConfig),
     UserModule,
     EmailModule,
-    AuthModule
+    AuthModule,
+    AdminModule
   ],
   controllers: [AppController],
   providers: [AppService],

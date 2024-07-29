@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { generateRandomPassword } from 'src/common/utils/password.utils';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeInsert } from 'typeorm';
 import { UpdateDateColumn } from 'typeorm/decorator/columns/UpdateDateColumn';
 
 @Entity()

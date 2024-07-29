@@ -28,23 +28,23 @@ export class AuthController {
     return this.authService.signIn(createUserDto);
   }
 
-  @Post('admin/register')
-  signUpAdmin(@Body() createUserDto: CreateUserDto) {
-    createUserDto.role = Role.SuperAdmin;
-    return this.authService.signUp(createUserDto);
-  }
+  // @Post('admin/register')
+  // signUpAdmin(@Body() createUserDto: CreateUserDto) {
+  //   createUserDto.role = Role.SuperAdmin;
+  //   return this.authService.signUp(createUserDto);
+  // }
 
-  @Post('org/register')
-  signUpOrganization(@Body() createUserDto: CreateUserDto) {
-    createUserDto.role = Role.Organization;
-    return this.authService.signUp(createUserDto);
-  }
+  // @Post('org/register')
+  // signUpOrganization(@Body() createUserDto: CreateUserDto) {
+  //   createUserDto.role = Role.Organization;
+  //   return this.authService.signUp(createUserDto);
+  // }
 
-  @Post('register')
-  signUpDoctor(@Body() createUserDto: CreateUserDto) {
-    createUserDto.role = Role.Doctor;
-    return this.authService.signUp(createUserDto);
-  }
+  // @Post('register')
+  // signUpDoctor(@Body() createUserDto: CreateUserDto) {
+  //   createUserDto.role = Role.Doctor;
+  //   return this.authService.signUp(createUserDto);
+  // }
 
   // Developement Purpose
   @Patch('update-password')

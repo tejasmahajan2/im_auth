@@ -10,7 +10,7 @@ export class EmailService {
         const mail: MailDataRequired = {
             to: recipient,
             from: process.env.SENDGRID_SENDER_ID, //Approved sender ID in Sendgrid
-            subject: 'Test email',
+            subject: 'One Time Password',
             content: [{ type: 'text/plain', value: body }],
         };
         await this.sendGridClient.send(mail);

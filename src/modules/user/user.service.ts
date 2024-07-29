@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { SignUpUserDto } from './dto/sign-up-user.dto';
 
 @Injectable()
 export class UserService {
@@ -20,14 +21,16 @@ export class UserService {
     return await this.usersRepository.findOneBy({ email });
   }
 
-  async isExist(email: string): Promise<Boolean> {
-    return await this.usersRepository.exists({
+  async isExist(email: string): Promise<boolean> {
+    const user = await this.usersRepository.findOne({
       where: { email }
     });
+    return user !== null;
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const user = await this.usersRepository.save(createUserDto);
+  // Main entry point that create an account
+  async create(signUpUserDto: SignUpUserDto){
+    const user = await this.usersRepository.save(signUpUserDto);
     const { password, ...result } = user;
     return result;
   }
