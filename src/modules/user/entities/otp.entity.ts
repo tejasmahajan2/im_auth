@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeor
 import { UpdateDateColumn } from 'typeorm/decorator/columns/UpdateDateColumn';
 
 @Entity()
-export class User {
+export class Otp {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
@@ -10,7 +10,7 @@ export class User {
   email: string;
 
   @Column({ nullable: false })
-  password: string;
+  otp: string;
 
   @Column({ nullable: true })
   role: string;
@@ -18,15 +18,6 @@ export class User {
   @Column({ default: false })
   isDeleted: boolean;
 
-  @Column({ nullable: false })
-  createdBy: string;
-
-  @Column({ nullable: true })
-  modifiedBy: string;
-
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', onUpdate: 'CURRENT_TIMESTAMP', nullable: true })
-  modifiedAt: Date;
 }

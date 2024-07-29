@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -43,9 +43,9 @@ export class UserService {
     return `This action returns a #${id} user`;
   }
 
-  async updateOne(email: string, updateUserDto: UpdateUserDto): Promise<String> {
-    const result = await this.usersRepository.update({ email }, { ...updateUserDto });
-    return 'Password updated successfully.';
+  async updateOne(email: string, updatePasswordDto: UpdatePasswordDto): Promise<String> {
+    const result = await this.usersRepository.update({ email }, { ...updatePasswordDto });
+    return result.affected > 0 ? 'Password updated successfully.' : 'Password update failed.';
   }
 
   // remove(id: number) {

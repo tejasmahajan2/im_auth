@@ -13,6 +13,8 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { SignInUserDto } from '../user/dto/sign-in-user.dto';
+import { VerifyOtp } from '../user/dto/verify-otp.dto';
+import { UpdatePasswordDto } from '../user/dto/update-password.dto';
 
 @Injectable()
 export class AdminService {
@@ -35,8 +37,15 @@ export class AdminService {
     }
 
     async signIn(signInUserDto: SignInUserDto) {
-        // return 'Verification key has been sent on ' + signInUserDto.email;
         return await this.authService.signIn(signInUserDto);
+    }
+
+    async verifyOtp(verifyOtp: VerifyOtp) {
+        return await this.authService.verifyOtp(verifyOtp);
+    }
+
+    async updatePassword(email: string, updatePasswordDto: UpdatePasswordDto) {
+        return await this.authService.updatePassword(email, updatePasswordDto);
     }
 
     async inviteOrg(inviteOrgDto: InviteOrgDto): Promise<string> {

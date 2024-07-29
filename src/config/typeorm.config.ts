@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Otp } from 'src/modules/user/entities/otp.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
@@ -8,7 +9,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [User],
+  entities: [User, Otp],
   autoLoadEntities: true,
   synchronize: true,
 };

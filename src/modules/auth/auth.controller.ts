@@ -13,7 +13,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { Role } from 'src/common/enum/role.enum';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { ExpressRequest } from 'src/common/decorators/express-request.decorator';
-import { UpdateUserDto } from '../user/dto/update-user.dto';
+import { UpdatePasswordDto } from '../user/dto/update-password.dto';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 
@@ -49,8 +49,8 @@ export class AuthController {
   // Developement Purpose
   @Patch('update-password')
   @UseGuards(AuthGuard)
-  updatePassword(@Req() req: ExpressRequest, @Body() updateUserDto: UpdateUserDto) {
-    return this.authService.updateOne(req.user.username, updateUserDto);
+  updatePassword(@Req() req: ExpressRequest, @Body() updatePasswordDto: UpdatePasswordDto) {
+    return this.authService.updatePassword(req.user.email, updatePasswordDto);
   }
 
   @Delete()
